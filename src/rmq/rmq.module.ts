@@ -6,7 +6,6 @@ import { RmqService } from "./rmq.service";
 interface RmqModuleOptions {
   name: string;
 }
-
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
   providers: [RmqService],
