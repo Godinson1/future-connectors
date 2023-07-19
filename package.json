@@ -11,6 +11,9 @@
   },
   "author": "Godwin Joseph <godinson45@gmail.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@nestjs/common": "^9.4.1",
     "@nestjs/config": "^2.3.2",
