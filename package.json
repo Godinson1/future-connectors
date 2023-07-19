@@ -5,9 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc",
-    "prepublish": "npm run build",
+    "release": "npm run build && changeset publish",
     "lint": "tsc"
   },
   "author": "Godwin Joseph <godinson45@gmail.com>",
