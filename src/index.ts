@@ -6,3 +6,5 @@ export * from "./auth/auth.service";
 export * from "./kafka/kafka.module";
 export * from "./kafka/services/consumer.service";
 export * from "./kafka/services/producer.service";
+export * from "./decorators";
+export * from "./dto";

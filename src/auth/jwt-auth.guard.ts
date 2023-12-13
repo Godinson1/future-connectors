@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { catchError, Observable, tap } from "rxjs";
+import { catchError, lastValueFrom, Observable, tap } from "rxjs";
 import { extractTokenFromHeader } from "./auth.service";
 import { AUTH_SERVICE } from "./auth.service";
 
@@ -10,18 +10,16 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const authentication = this.getAuthentication(context);
-    return this.authClient
-      .send("validate_user", {
-        Authentication: authentication,
-      })
-      .pipe(
+    return lastValueFrom(
+      this.authClient.send("authenticate", { Authentication: authentication }).pipe(
         tap((res) => {
           this.addUser(res, context);
         }),
         catchError(() => {
           throw new UnauthorizedException();
         })
-      );
+      )
+    );
   }
 
   private getAuthentication(context: ExecutionContext) {
@@ -34,6 +32,7 @@ export class JwtAuthGuard implements CanActivate {
     if (!authentication) {
       throw new UnauthorizedException("No value was provided for Authentication");
     }
+
     return authentication;
   }
 
